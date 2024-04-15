@@ -1,4 +1,4 @@
-# ![VetSpace Logo](./Doc/imgs/logo.png) VetSpace - Projeto Integrador 2 - Frontend
+# ![VetSpace Logo](./Doc/imgs/logo.png) VetSpace - Projeto Integrador 2 - Backend
 
 ###### Este projeto foi desenvolvido para a disciplina de Projeto Integrador 2 da faculdade na UDESC.
 
@@ -7,10 +7,7 @@
 ![Em Desenvolvimento](https://img.shields.io/badge/Status-Em_Desenvolvimento-green)
 
 ## Tecnologias Utilizadas
-![HTML](https://skillicons.dev/icons?i=html)
-![CSS](https://skillicons.dev/icons?i=css)
-[![React](https://skillicons.dev/icons?i=react)](https://react.dev/)
-[![Tailwind](https://skillicons.dev/icons?i=tailwind)](https://tailwindcss.com/)
+[![Java](https://skillicons.dev/icons?i=java)](https://www.java.com/en/)
 [![Postgres](https://skillicons.dev/icons?i=postgres)](https://www.postgresql.org/)
 
 ## Índice
@@ -43,7 +40,7 @@ VetSpace é uma clínica veterinária fictícia que demandava um sistema de gest
 ### Pré-Requisitos
 
 ## Como Utilizar
-*Para as funcionabilidades do sistema funcionárem, é necessário que o [backend](https://github.com/filipezulian/vetspace-springboot-backend) esteja rodando.*
+*Para visualizar as funcionabilidades do sistema, é necessário que o [frontend](https://github.com/filipezulian/vetspace-react-frontend) esteja rodando.*
 
 
 ## Documentação
