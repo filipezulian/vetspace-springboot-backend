@@ -1,6 +1,8 @@
 package com.pin.vetspace.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,13 @@ public class ClienteServiceImpl implements ClienteService {
     
     @Autowired
     ClienteRepository clienteRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public ClienteServiceImpl(ClienteRepository clienteRepository, PasswordEncoder passwordEncoder) {
+        this.clienteRepository = clienteRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public Cliente salvarCliente(Cliente cliente) {
@@ -28,8 +37,6 @@ public class ClienteServiceImpl implements ClienteService {
         return clienteNovo;
     }
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public Cliente buscarClientePorId(Long id) {

@@ -14,8 +14,13 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     @Autowired
     FuncionarioRepository funcionarioRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public FuncionarioServiceImpl(FuncionarioRepository funcionarioRepository, PasswordEncoder passwordEncoder) {
+        this.funcionarioRepository = funcionarioRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public Funcionario salvarFuncionario(Funcionario funcionario) {

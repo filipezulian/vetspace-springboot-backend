@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.pin.vetspace.model.Funcionario;
+import com.pin.vetspace.model.Permissao;
 
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long>{
 
@@ -15,7 +16,7 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long>{
 	
 	List<Funcionario> findAll();
 	
-	List<Funcionario> findByPermissao(int permissao);
+	List<Funcionario> findByPermissao(Permissao permissao);
 	
 	 Optional<Funcionario> findByEmail(String email);
 }

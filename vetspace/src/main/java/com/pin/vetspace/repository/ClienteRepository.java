@@ -15,7 +15,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	
 	List<Cliente> findAll();
 	
-	List<Cliente> findByPermissao(int permissao);
+	List<Cliente> findByPermissao(Permissao permissao);
 	
 	Optional<Cliente> findByEmail(String email);
 }
