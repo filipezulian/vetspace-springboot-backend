@@ -25,7 +25,7 @@ public class Cliente {
     private Long id;
     
     @Column(name = "permissao")
-    private int permissao;
+    private Permissao permissao;
 
     private String nome;
 

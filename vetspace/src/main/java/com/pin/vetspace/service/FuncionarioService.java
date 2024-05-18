@@ -4,9 +4,15 @@ import com.pin.vetspace.model.Funcionario;
 
 public interface FuncionarioService {
 
-	Funcionario salvarFuncionario(Funcionario funcionario);
-	Funcionario buscarFuncionario(Funcionario funcionario);
-	Funcionario atualizarFuncionario(Funcionario funcionario);
-	Funcionario excluirFuncionario(Funcionario funcionario);
-	Funcionario buscarFuncionarioNome(Funcionario funcionario);
+    Funcionario salvarFuncionario(Funcionario funcionario);
+
+    Funcionario buscarFuncionarioPorId(Long id);
+
+    Funcionario atualizarFuncionario(Funcionario funcionario);
+
+    void excluirFuncionario(Long id);
+
+    Funcionario buscarFuncionarioPorNome(String nome);
+
+    Funcionario buscarFuncionarioPorEmail(String email);
 }

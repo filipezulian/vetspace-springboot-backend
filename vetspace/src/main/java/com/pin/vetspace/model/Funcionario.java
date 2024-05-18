@@ -2,8 +2,6 @@ package com.pin.vetspace.model;
 
 import java.util.List;
 
-import com.pin.vetspace.permissao.Permissao;
-
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,7 +31,7 @@ public class Funcionario {
     private Long id;
     
     @Column(name = "permissao")
-    private int permissao;
+    private Permissao permissao;
 
     private String nome;
 

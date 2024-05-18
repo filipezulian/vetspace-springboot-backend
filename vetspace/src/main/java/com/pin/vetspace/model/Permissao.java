@@ -1,4 +1,4 @@
-package com.pin.vetspace.permissao;
+package com.pin.vetspace.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,4 +21,8 @@ public class Permissao {
 
     @Column(name = "nome")
     private String nome;
+    
+    @Column(name = "permissao")
+    private Integer permissao;
+    
 }

@@ -1,8 +1,9 @@
 package com.pin.vetspace.serviceImpl;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import com.pin.vetspace.model.Funcionario;
 import com.pin.vetspace.repository.FuncionarioRepository;
 import com.pin.vetspace.service.FuncionarioService;
@@ -10,48 +11,52 @@ import com.pin.vetspace.service.FuncionarioService;
 @Service
 public class FuncionarioServiceImpl implements FuncionarioService {
 
-	FuncionarioRepository funcionarioRepository;
+    @Autowired
+    FuncionarioRepository funcionarioRepository;
 
-	@Override
-	public Funcionario salvarFuncionario(Funcionario funcionario) {
-		Funcionario existeFuncionario = funcionarioRepository.findByNome(funcionario.getNome());
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-		if (existeFuncionario != null) {
-			throw new Error("Funcionário já existe");
-		}
+    @Override
+    public Funcionario salvarFuncionario(Funcionario funcionario) {
+        Funcionario existeFuncionario = funcionarioRepository.findByNome(funcionario.getNome());
 
-		funcionario.setSenha(passwordEncoder().encode(funcionario.getSenha()));
-		Funcionario funcionarioNovo = funcionarioRepository.save(funcionario);
+        if (existeFuncionario != null) {
+            throw new Error("Funcionário já existe");
+        }
 
-		return funcionarioNovo;
-	}
+        funcionario.setSenha(passwordEncoder.encode(funcionario.getSenha()));
+        Funcionario funcionarioNovo = funcionarioRepository.save(funcionario);
 
-	@Override
-	public Funcionario buscarFuncionario(Funcionario funcionario) {
-		// TODO Auto-generated method stub
+        return funcionarioNovo;
+    }
+
+    @Override
+    public Funcionario buscarFuncionarioPorId(Long id) {
 		return null;
-	}
+        // Implementação
+    }
 
-	@Override
-	public Funcionario atualizarFuncionario(Funcionario funcionario) {
-		// TODO Auto-generated method stub
+    @Override
+    public Funcionario atualizarFuncionario(Funcionario funcionario) {
+		return funcionario;
+        // Implementação
+    }
+
+    @Override
+    public void excluirFuncionario(Long id) {
+        // Implementação
+    }
+
+    @Override
+    public Funcionario buscarFuncionarioPorNome(String nome) {
 		return null;
-	}
+        // Implementação
+    }
 
-	@Override
-	public Funcionario excluirFuncionario(Funcionario funcionario) {
-		// TODO Auto-generated method stub
+    @Override
+    public Funcionario buscarFuncionarioPorEmail(String email) {
 		return null;
-	}
-
-	@Override
-	public Funcionario buscarFuncionarioNome(Funcionario funcionario) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
+        // Implementação
+    }
 }
