@@ -10,13 +10,13 @@ import com.pin.vetspace.model.Permissao;
 
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long>{
 
-	Funcionario findById(long id);
+	Optional<Funcionario> findById(long id);
 	
-	Funcionario findByNome(String nome);
+	Optional<Funcionario> findByNome(String nome);
 	
 	List<Funcionario> findAll();
 	
-	List<Funcionario> findByPermissao(Permissao permissao);
+	//List<Funcionario> findByPermissao(Integer permissaoId);
 	
 	 Optional<Funcionario> findByEmail(String email);
 }

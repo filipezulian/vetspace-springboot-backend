@@ -8,12 +8,15 @@ public interface ClienteService {
 
     Cliente buscarClientePorId(Long id);
 
-    Cliente atualizarCliente(Cliente cliente);
+    Cliente editarCliente(Cliente cliente);
 
     void excluirCliente(Long id);
 
     Cliente buscarClientePorNome(String nome);
 
     Cliente buscarClientePorEmail(String email);
+    
+    Cliente autenticar(String email, String senha);
+
 }
 

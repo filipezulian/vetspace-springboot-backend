@@ -8,11 +8,13 @@ public interface FuncionarioService {
 
     Funcionario buscarFuncionarioPorId(Long id);
 
-    Funcionario atualizarFuncionario(Funcionario funcionario);
+    Funcionario editarFuncionario(Funcionario funcionario);
 
     void excluirFuncionario(Long id);
 
     Funcionario buscarFuncionarioPorNome(String nome);
 
     Funcionario buscarFuncionarioPorEmail(String email);
+    
+    Funcionario autenticar(String email, String senha);
 }

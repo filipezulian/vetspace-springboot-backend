@@ -1,8 +1,11 @@
 package com.pin.vetspace.serviceImpl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.pin.vetspace.exception.ErroAutenticacao;
 
 import com.pin.vetspace.model.Funcionario;
 import com.pin.vetspace.repository.FuncionarioRepository;
@@ -14,23 +17,24 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     @Autowired
     FuncionarioRepository funcionarioRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    //private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public FuncionarioServiceImpl(FuncionarioRepository funcionarioRepository, PasswordEncoder passwordEncoder) {
+    public FuncionarioServiceImpl(FuncionarioRepository funcionarioRepository) { //, PasswordEncoder passwordEncoder
         this.funcionarioRepository = funcionarioRepository;
-        this.passwordEncoder = passwordEncoder;
+        //this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public Funcionario salvarFuncionario(Funcionario funcionario) {
-        Funcionario existeFuncionario = funcionarioRepository.findByNome(funcionario.getNome());
+        Optional<Funcionario> existeFuncionario = funcionarioRepository.findByEmail(funcionario.getEmail());
 
-        if (existeFuncionario != null) {
+        if (existeFuncionario.isPresent()) {
             throw new Error("Funcionário já existe");
         }
 
-        funcionario.setSenha(passwordEncoder.encode(funcionario.getSenha()));
+        //funcionario.setSenha(passwordEncoder.encode(funcionario.getSenha()));
+        funcionario.setPermissao(2);
         Funcionario funcionarioNovo = funcionarioRepository.save(funcionario);
 
         return funcionarioNovo;
@@ -38,30 +42,77 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
     @Override
     public Funcionario buscarFuncionarioPorId(Long id) {
-		return null;
-        // Implementação
+    	return funcionarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Funcionario não encontrado"));
     }
 
     @Override
-    public Funcionario atualizarFuncionario(Funcionario funcionario) {
-		return funcionario;
-        // Implementação
+    public Funcionario editarFuncionario(Funcionario funcionario) {
+    	Funcionario funcionarioExistente = buscarFuncionarioPorId(funcionario.getId());
+        
+        if (funcionarioExistente == null) {
+            throw new RuntimeException("Funcionário não encontrado com o ID fornecido: " + funcionario.getId());
+		} else {
+             if (funcionario.getNome() != null) {
+                 funcionarioExistente.setNome(funcionario.getNome());
+             }
+             if (funcionario.getPlantao() != 0) {
+                 funcionarioExistente.setPlantao(funcionario.getPlantao());
+             }
+             if (funcionario.getEspecializacao() != null) {
+                 funcionarioExistente.setEspecializacao(funcionario.getEspecializacao());
+             }
+             if (funcionario.getTelefone() != null) {
+                 funcionarioExistente.setTelefone(funcionario.getTelefone());
+             }
+             if (funcionario.getEmail() != null) {
+                 funcionarioExistente.setEmail(funcionario.getEmail());
+             }
+             if (funcionario.getSenha() != null) {
+                 funcionarioExistente.setSenha(funcionario.getSenha());
+             }
+             if (funcionario.getFoto() != null) {
+                 funcionarioExistente.setFoto(funcionario.getFoto());
+             }
+        }
+        
+        return funcionarioRepository.save(funcionarioExistente);
     }
+
 
     @Override
     public void excluirFuncionario(Long id) {
-        // Implementação
-    }
+	    Funcionario funcionarioExistente = buscarFuncionarioPorId(id);
+	    
+	    if (funcionarioExistente != null) {
+	        funcionarioRepository.delete(funcionarioExistente);
+	    } else {
+	        throw new RuntimeException("Funcionario não encontrado");
+	    }
+	}
 
     @Override
     public Funcionario buscarFuncionarioPorNome(String nome) {
-		return null;
-        // Implementação
+    	return funcionarioRepository.findByNome(nome).orElseThrow(() -> new RuntimeException("Funcionario não encontrado"));
     }
 
     @Override
     public Funcionario buscarFuncionarioPorEmail(String email) {
-		return null;
-        // Implementação
+    	return funcionarioRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Funcionario não encontrado"));
     }
+
+	@Override
+	public Funcionario autenticar(String email, String senha) {
+		Optional<Funcionario> funcionario = funcionarioRepository.findByEmail(email);
+		if(!funcionario.isPresent()) {
+			throw new ErroAutenticacao("Usuário Inválido");
+		}
+		
+		if(!funcionario.get().getSenha().equals(senha)) {
+			throw new ErroAutenticacao("Senha Inválida");
+		}
+		return funcionario.get();
+
+	}
+    
+    
 }
