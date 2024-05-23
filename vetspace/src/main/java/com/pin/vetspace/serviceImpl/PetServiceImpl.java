@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pin.vetspace.model.Cliente;
+import com.pin.vetspace.model.Usuario;
 import com.pin.vetspace.model.Pet;
 import com.pin.vetspace.repository.PetRepository;
 import com.pin.vetspace.service.PetService;
@@ -75,8 +75,8 @@ public class PetServiceImpl implements PetService {
 	}
 
 	@Override
-	public Pet buscarPetPorCliente(Cliente cliente) {
-		return petRepository.findByCliente(cliente).orElseThrow(() -> new RuntimeException("Pet não encontrado"));
+	public Pet buscarPetPorUsuario(Usuario usuario) {
+		return petRepository.findByUsuario(usuario).orElseThrow(() -> new RuntimeException("Pet não encontrado"));
 	}
 
 }

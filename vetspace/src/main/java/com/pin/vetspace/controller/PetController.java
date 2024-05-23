@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.pin.vetspace.model.Cliente;
+import com.pin.vetspace.model.Usuario;
 import com.pin.vetspace.model.Pet;
 import com.pin.vetspace.service.PetService;
 
@@ -48,9 +48,9 @@ public class PetController {
         return ResponseEntity.ok(pet);
     }
 
-    @GetMapping("/cliente/{nome}")
-    public ResponseEntity<Pet> buscarPetPorCliente(@PathVariable Cliente cliente){
-        Pet pet = petService.buscarPetPorCliente(cliente);
+    @GetMapping("/usuario/{nome}")
+    public ResponseEntity<Pet> buscarPetPorUsuario(@PathVariable Usuario usuario){
+        Pet pet = petService.buscarPetPorUsuario(usuario);
         return ResponseEntity.ok(pet);
     }
 }

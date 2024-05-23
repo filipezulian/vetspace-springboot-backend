@@ -1,6 +1,6 @@
 package com.pin.vetspace.service;
 
-import com.pin.vetspace.model.Cliente;
+import com.pin.vetspace.model.Usuario;
 import com.pin.vetspace.model.Pet;
 
 public interface PetService {
@@ -15,6 +15,6 @@ public interface PetService {
 
     Pet buscarPetPorNome(String nome);
 
-    Pet buscarPetPorCliente(Cliente cliente);
+    Pet buscarPetPorUsuario(Usuario usuario);
     
 }

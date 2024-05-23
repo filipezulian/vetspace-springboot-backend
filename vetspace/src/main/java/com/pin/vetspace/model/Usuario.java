@@ -1,17 +1,14 @@
 package com.pin.vetspace.model;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -20,16 +17,16 @@ import lombok.Setter;
 
 @Data
 @Entity
-@Table(name = "CLIENTE")
+@Table(name = "usuarios")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cliente {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cliente_id")
+    @Column(name = "user_id")
     private Long id;
    
     private String nome;
@@ -39,8 +36,7 @@ public class Cliente {
     private String telefone;
 
     private String senha;
-   
-    private Integer permissao;
 
+    private Integer permissao;
 
 }

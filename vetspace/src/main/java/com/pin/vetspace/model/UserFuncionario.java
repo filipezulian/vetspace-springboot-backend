@@ -1,10 +1,14 @@
 package com.pin.vetspace.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,18 +18,22 @@ import lombok.Setter;
 
 @Data
 @Entity
-@Table(name = "PERMISSAO")
+@Table(name = "user_funcionario")
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class Permissao {
+public class UserFuncionario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "per_id")
-    private Long id;
-
-    @Column(name = "nome")
-    private String nome;
+    @Column(name = "func_id")
+    private Long funcId;
     
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private Usuario usuario;
+
+    private String especializao;
+
+    private Integer plantao;
 }

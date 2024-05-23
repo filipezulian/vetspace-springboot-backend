@@ -10,7 +10,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,7 +40,8 @@ public class Pet {
     private boolean sexo;
     
     @ManyToOne
-    private Cliente cliente;
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private Usuario usuario;
     
     private String nome;
     
