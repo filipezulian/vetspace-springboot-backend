@@ -26,9 +26,9 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) {
-    	Usuario UsuarioSalvo = usuarioService.salvarUsuario(usuario);
-        return new ResponseEntity<>(UsuarioSalvo, HttpStatus.CREATED);
+    public ResponseEntity<Long> cadastrarUsuario(@RequestBody Usuario usuario) {
+        Long usuarioId = usuarioService.salvarUsuario(usuario);
+        return new ResponseEntity<>(usuarioId, HttpStatus.CREATED);
     }
     
     @PutMapping("/editar/{usuarioId}")

@@ -8,7 +8,7 @@ import com.pin.vetspace.model.Pet;
 
 public interface PetService {
 
-    Pet salvarPet(Pet pet);
+    //Pet salvarPet(Pet pet);
 
     Pet buscarPetPorId(Long id);
 
@@ -19,5 +19,7 @@ public interface PetService {
     Pet buscarPetPorNome(String nome);
 
     List<Pet> buscarPetPorUsuario(Usuario usuario);
+    
+    Pet salvarPetParaUsuario(Pet pet, Long userId);
     
 }

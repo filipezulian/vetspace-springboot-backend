@@ -5,7 +5,7 @@ import com.pin.vetspace.model.Usuario;
 
 public interface UsuarioService {
 
-    Usuario salvarUsuario(Usuario cliente);
+    Long salvarUsuario(Usuario cliente);
 
     Usuario buscarUsuarioPorId(Long id);
 

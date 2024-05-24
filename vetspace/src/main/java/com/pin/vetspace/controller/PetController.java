@@ -22,9 +22,15 @@ public class PetController {
     
     private final UsuarioService usuarioService;
 
-    @PostMapping("/cadastrar")
+    /*@PostMapping("/cadastrar")
     public ResponseEntity<Pet> cadastrarPet(@RequestBody Pet pet) {
         Pet petSalvo = petService.salvarPet(pet);
+        return new ResponseEntity<>(petSalvo, HttpStatus.CREATED);
+    }*/
+    
+    @PostMapping("/cadastrar/{usuarioId}")
+    public ResponseEntity<Pet> cadastrarPet(@PathVariable Long usuarioId, @RequestBody Pet pet) {
+        Pet petSalvo = petService.salvarPetParaUsuario(pet, usuarioId);
         return new ResponseEntity<>(petSalvo, HttpStatus.CREATED);
     }
 
@@ -47,8 +53,8 @@ public class PetController {
         return ResponseEntity.ok(pet);
     }
 
-    @GetMapping("/nome/{nome}")
-    public ResponseEntity<Pet> buscarPetPorNome(@PathVariable String nome){
+    @GetMapping("/nomePet/{nome}")
+    public ResponseEntity<Pet> buscarPetPorNome(@PathVariable String nome) {
         Pet pet = petService.buscarPetPorNome(nome);
         return ResponseEntity.ok(pet);
     }

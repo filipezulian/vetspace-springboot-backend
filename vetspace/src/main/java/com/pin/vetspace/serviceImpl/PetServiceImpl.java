@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.pin.vetspace.model.Usuario;
 import com.pin.vetspace.model.Pet;
 import com.pin.vetspace.repository.PetRepository;
+import com.pin.vetspace.repository.UsuarioRepository;
 import com.pin.vetspace.service.PetService;
 
 @Service
@@ -17,13 +18,17 @@ public class PetServiceImpl implements PetService {
 
 	@Autowired
 	PetRepository petRepository;
+	
+
+	@Autowired
+	UsuarioRepository usuarioRepository;
 
 	@Autowired
 	public PetServiceImpl(PetRepository petRepository) {
 		this.petRepository = petRepository;
 	}
 
-	@Override
+	/*@Override
 	public Pet salvarPet(Pet pet) {
 		Optional<Pet> existePet =petRepository.findById(pet.getId());
 
@@ -34,6 +39,17 @@ public class PetServiceImpl implements PetService {
 		Pet petNovo = petRepository.save(pet);
 
 		return petNovo;
+	}*/
+	
+	@Override
+	public Pet salvarPetParaUsuario(Pet pet, Long userId) {
+	    Optional<Usuario> usuarioOptional = usuarioRepository.findById(userId);
+	    if (usuarioOptional.isEmpty()) {
+	        throw new RuntimeException("Usuário não encontrado");
+	    }
+	    Usuario usuario = usuarioOptional.get();
+	    pet.setUsuario(usuario);
+	    return petRepository.save(pet);
 	}
 
 	@Override

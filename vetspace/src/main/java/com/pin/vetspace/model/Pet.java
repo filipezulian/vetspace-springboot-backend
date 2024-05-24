@@ -39,12 +39,11 @@ public class Pet {
     
     private boolean sexo;
     
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private Usuario usuario;
-    
     private String nome;
     
     private LocalDate nascimento;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private Usuario usuario;
 }

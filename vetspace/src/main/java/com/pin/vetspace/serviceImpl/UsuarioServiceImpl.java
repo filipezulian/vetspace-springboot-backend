@@ -36,7 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	PetRepository petRepository;
 
 	@Override
-	public Usuario salvarUsuario(Usuario usuario) {
+	public Long salvarUsuario(Usuario usuario) {
 		Optional<Usuario> existeUsuario = usuarioRepository.findByEmail(usuario.getEmail());
 
 		if (existeUsuario.isPresent()) {
@@ -50,7 +50,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 		usuario.setPermissao(3);
 		usuario.setSenha(senhaHash);
 
-		return usuarioRepository.save(usuario);
+		Usuario usuarioSalvo = usuarioRepository.save(usuario);
+		return usuarioSalvo.getId();
 	}
 
 	@Override
