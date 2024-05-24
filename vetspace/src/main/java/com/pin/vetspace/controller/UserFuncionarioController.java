@@ -40,20 +40,20 @@ public class UserFuncionarioController {
         }
     }
     
-    @DeleteMapping("/excluir/{func_id}")
-    public ResponseEntity<Void> excluirFuncionario(@PathVariable Long func_id) {
+    @DeleteMapping("/excluir/{user_id}")
+    public ResponseEntity<Void> excluirFuncionario(@PathVariable Long user_id) {
         try {
-            funcionarioService.excluirFuncionario(func_id);
-            return ResponseEntity.noContent().build();
+            funcionarioService.excluirFuncionario(user_id);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
-    @GetMapping("/{func_id}")
-    public ResponseEntity<UserFuncionario> buscarFuncionarioPorId(@PathVariable Long func_id) {
+    @GetMapping("/{user_id}")
+    public ResponseEntity<UserFuncionario> buscarFuncionarioPorId(@PathVariable Long user_id) {
         try {
-            UserFuncionario funcionario = funcionarioService.buscarFuncionarioPorId(func_id);
+            UserFuncionario funcionario = funcionarioService.buscarFuncionarioPorId(user_id);
             return ResponseEntity.ok(funcionario);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

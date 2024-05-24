@@ -85,8 +85,8 @@ public class UserFuncionarioServiceImpl implements UserFuncionarioService {
     }
 
     @Override
-    public void excluirFuncionario(Long funcId) {
-        Optional<UserFuncionario> funcionarioOptional = funcionarioRepository.findById(funcId);
+    public void excluirFuncionario(Long id) {
+        Optional<UserFuncionario> funcionarioOptional = funcionarioRepository.findByUsuarioId(id);
         
         if (funcionarioOptional.isPresent()) {
             UserFuncionario funcionario = funcionarioOptional.get();
