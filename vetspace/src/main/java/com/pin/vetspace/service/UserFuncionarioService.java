@@ -9,7 +9,7 @@ public interface UserFuncionarioService {
 
     UserFuncionario salvarFuncionario(UserFuncionario userFuncionario);
 
-    UserFuncionario buscarFuncionarioPorId(Long id);
+    //UserFuncionario buscarFuncionarioPorId(Long id);
 
     UserFuncionario editarFuncionario(UserFuncionario userFuncionario);
 
@@ -22,4 +22,6 @@ public interface UserFuncionarioService {
     UserFuncionario autenticar(Credencial credencial);
     
     List<UserFuncionario> buscarFuncionariosPorPlantao(Integer plantao);
+    
+    UserFuncionario buscarFuncionarioPorUserId(Long userId);
 }

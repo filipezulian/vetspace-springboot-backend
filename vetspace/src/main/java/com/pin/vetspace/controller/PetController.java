@@ -2,6 +2,8 @@ package com.pin.vetspace.controller;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.pin.vetspace.model.Usuario;
 import com.pin.vetspace.model.Pet;
 import com.pin.vetspace.service.PetService;
+import com.pin.vetspace.service.UsuarioService;
 
 @RestController
 @RequestMapping("/pet")
@@ -16,6 +19,8 @@ import com.pin.vetspace.service.PetService;
 public class PetController {
 
     private final PetService petService;
+    
+    private final UsuarioService usuarioService;
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Pet> cadastrarPet(@RequestBody Pet pet) {
@@ -49,8 +54,9 @@ public class PetController {
     }
 
     @GetMapping("/usuario/{nome}")
-    public ResponseEntity<Pet> buscarPetPorUsuario(@PathVariable Usuario usuario){
-        Pet pet = petService.buscarPetPorUsuario(usuario);
-        return ResponseEntity.ok(pet);
+    public ResponseEntity<List<Pet>> buscarPetPorUsuario(@PathVariable String nome) {
+        Usuario usuario = usuarioService.buscarUsuarioPorNome(nome);
+        List<Pet> pets = petService.buscarPetPorUsuario(usuario);
+        return ResponseEntity.ok(pets);
     }
 }

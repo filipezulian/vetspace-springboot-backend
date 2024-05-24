@@ -1,5 +1,7 @@
 package com.pin.vetspace.serviceImpl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,10 +75,10 @@ public class PetServiceImpl implements PetService {
 	public Pet buscarPetPorNome(String nome) {
 		return petRepository.findByNome(nome).orElseThrow(() -> new RuntimeException("Pet não encontrado"));
 	}
-
-	@Override
-	public Pet buscarPetPorUsuario(Usuario usuario) {
-		return petRepository.findByUsuario(usuario).orElseThrow(() -> new RuntimeException("Pet não encontrado"));
-	}
+	
+    @Override
+    public List<Pet> buscarPetPorUsuario(Usuario usuario) {
+        return petRepository.findByUsuario(usuario);
+    }
 
 }

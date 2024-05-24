@@ -53,8 +53,9 @@ public class UserFuncionarioServiceImpl implements UserFuncionarioService {
     }
 
     @Override
-    public UserFuncionario buscarFuncionarioPorId(Long id) {
-        return funcionarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
+    public UserFuncionario buscarFuncionarioPorUserId(Long userId) {
+        return funcionarioRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Funcionário não encontrado para o usuário com o ID: " + userId));
     }
 
     @Override
@@ -138,4 +139,5 @@ public class UserFuncionarioServiceImpl implements UserFuncionarioService {
         }
         return funcionarios;
     }
+
 }

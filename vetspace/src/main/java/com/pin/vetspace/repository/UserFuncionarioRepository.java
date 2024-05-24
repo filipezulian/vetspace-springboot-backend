@@ -25,5 +25,8 @@ public interface UserFuncionarioRepository extends JpaRepository<UserFuncionario
     List<UserFuncionario> findByPlantao(Integer plantao);
     
     UserFuncionario findByUsuario(Usuario usuario);
+    
+    @Query("SELECT uf FROM UserFuncionario uf JOIN uf.usuario u WHERE u.id = :userId")
+    Optional<UserFuncionario> findByUserId(@Param("userId") Long userId);
 }
 

@@ -51,9 +51,9 @@ public class UserFuncionarioController {
     }
 
     @GetMapping("/{user_id}")
-    public ResponseEntity<UserFuncionario> buscarFuncionarioPorId(@PathVariable Long user_id) {
+    public ResponseEntity<UserFuncionario> buscarFuncionarioPorUserId(@PathVariable Long user_id) {
         try {
-            UserFuncionario funcionario = funcionarioService.buscarFuncionarioPorId(user_id);
+            UserFuncionario funcionario = funcionarioService.buscarFuncionarioPorUserId(user_id);
             return ResponseEntity.ok(funcionario);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
