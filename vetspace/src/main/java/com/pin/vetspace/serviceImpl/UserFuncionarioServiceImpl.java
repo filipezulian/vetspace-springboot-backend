@@ -140,4 +140,9 @@ public class UserFuncionarioServiceImpl implements UserFuncionarioService {
         return funcionarios;
     }
 
+//	@Override
+//	public List<Usuario> buscarTodosFuncionarios() {
+//		return usuarioRepository.findAllFuncionarios();
+//	}
+
 }

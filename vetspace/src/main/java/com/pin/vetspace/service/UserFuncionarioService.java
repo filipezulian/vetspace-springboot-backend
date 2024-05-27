@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pin.vetspace.model.Credencial;
 import com.pin.vetspace.model.UserFuncionario;
+import com.pin.vetspace.model.Usuario;
 
 public interface UserFuncionarioService {
 
@@ -24,4 +25,6 @@ public interface UserFuncionarioService {
     List<UserFuncionario> buscarFuncionariosPorPlantao(Integer plantao);
     
     UserFuncionario buscarFuncionarioPorUserId(Long userId);
+    
+//    List<Usuario> buscarTodosFuncionarios();
 }

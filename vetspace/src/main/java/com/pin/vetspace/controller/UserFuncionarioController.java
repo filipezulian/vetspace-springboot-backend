@@ -8,6 +8,7 @@ import java.util.List;
 import com.pin.vetspace.exception.ErroAutenticacao;
 import com.pin.vetspace.model.Credencial;
 import com.pin.vetspace.model.UserFuncionario;
+import com.pin.vetspace.model.Usuario;
 import com.pin.vetspace.service.UserFuncionarioService;
 
 @RestController
@@ -17,6 +18,11 @@ public class UserFuncionarioController {
 
     private final UserFuncionarioService funcionarioService;
 
+//    @GetMapping()
+//    public ResponseEntity<List<Usuario>> buscarFuncionarios(){
+//    	return ResponseEntity.ok().body(funcionarioService.buscarTodosFuncionarios());
+//    }
+    
     @PostMapping("/cadastrar")
     public ResponseEntity<UserFuncionario> cadastrarFuncionario(@RequestBody UserFuncionario userFuncionario) {
         try {

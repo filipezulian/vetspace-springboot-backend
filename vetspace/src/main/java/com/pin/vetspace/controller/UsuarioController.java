@@ -2,6 +2,8 @@ package com.pin.vetspace.controller;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +26,11 @@ import com.pin.vetspace.service.UsuarioService;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+    
+    @GetMapping()
+    public ResponseEntity<List<Usuario>> getUsuarios(){
+    	return ResponseEntity.ok().body(usuarioService.buscarTodos());
+    }
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Long> cadastrarUsuario(@RequestBody Usuario usuario) {
