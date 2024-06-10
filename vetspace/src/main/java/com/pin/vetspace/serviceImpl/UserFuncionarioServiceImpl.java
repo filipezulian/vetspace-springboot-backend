@@ -54,10 +54,12 @@ public class UserFuncionarioServiceImpl implements UserFuncionarioService {
         return funcionarioRepository.save(userFuncionario);
     }
 
+    
     @Override
-    public UserFuncionario buscarFuncionarioPorUserId(Long userId) {
-        return funcionarioRepository.findByUserId(userId)
+    public FuncionarioDTO buscarFuncionarioPorUserId(Long userId) {
+        UserFuncionario funcionario = funcionarioRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Funcionário não encontrado para o usuário com o ID: " + userId));
+        return new FuncionarioDTO(funcionario);
     }
 
     @Override
@@ -106,13 +108,17 @@ public class UserFuncionarioServiceImpl implements UserFuncionarioService {
     }
     
     @Override
-    public UserFuncionario buscarFuncionarioPorNome(String nome) {
-        return funcionarioRepository.findByNome(nome).orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
+    public FuncionarioDTO buscarFuncionarioPorNome(String nome) {
+        UserFuncionario funcionario = funcionarioRepository.findByNome(nome)
+                .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
+        return new FuncionarioDTO(funcionario);
     }
 
     @Override
-    public UserFuncionario buscarFuncionarioPorEmail(String email) {
-        return funcionarioRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
+    public FuncionarioDTO buscarFuncionarioPorEmail(String email) {
+        UserFuncionario funcionario = funcionarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
+        return new FuncionarioDTO(funcionario);
     }
 
     @Override
@@ -133,7 +139,6 @@ public class UserFuncionarioServiceImpl implements UserFuncionarioService {
         return u;
     }
 
-    
     @Override
     public List<FuncionarioDTO> buscarFuncionariosPorPlantao(Integer plantao) {
         List<UserFuncionario> funcionarios = funcionarioRepository.findByPlantao(plantao);
@@ -142,15 +147,15 @@ public class UserFuncionarioServiceImpl implements UserFuncionarioService {
         }
 
         return funcionarios.stream()
-                .map(func -> {
-                    FuncionarioDTO dto = new FuncionarioDTO();
-                    dto.setNome(func.getUsuario().getNome());
-                    dto.setPlantao(func.getPlantao());
-                    dto.setEspecializacao(func.getEspecializao());
-                    dto.setTelefone(func.getUsuario().getTelefone());
-                    dto.setEmail(func.getUsuario().getEmail());
-                    return dto;
-                })
+                .map(FuncionarioDTO::new)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    public List<FuncionarioDTO> buscarTodosFuncionarios() {
+        List<UserFuncionario> funcionarios = funcionarioRepository.findAll();
+        return funcionarios.stream()
+                .map(FuncionarioDTO::new)
                 .collect(Collectors.toList());
     }
 

@@ -10,21 +10,19 @@ public interface UserFuncionarioService {
 
     UserFuncionario salvarFuncionario(UserFuncionario userFuncionario);
 
-    //UserFuncionario buscarFuncionarioPorId(Long id);
-
     UserFuncionario editarFuncionario(UserFuncionario userFuncionario);
 
     void excluirFuncionario(Long id);
 
-    UserFuncionario buscarFuncionarioPorNome(String nome);
+    FuncionarioDTO buscarFuncionarioPorNome(String nome);
 
-    UserFuncionario buscarFuncionarioPorEmail(String email);
+    FuncionarioDTO buscarFuncionarioPorEmail(String email);
     
     UserFuncionario autenticar(Credencial credencial);
     
-    //List<UserFuncionario> buscarFuncionariosPorPlantao(Integer plantao);
-    
-    UserFuncionario buscarFuncionarioPorUserId(Long userId);
+    FuncionarioDTO buscarFuncionarioPorUserId(Long funcId);
     
     List<FuncionarioDTO> buscarFuncionariosPorPlantao(Integer plantao);
+    
+    List<FuncionarioDTO> buscarTodosFuncionarios();
 }

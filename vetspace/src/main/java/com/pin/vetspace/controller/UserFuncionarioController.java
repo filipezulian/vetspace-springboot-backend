@@ -53,9 +53,9 @@ public class UserFuncionarioController {
     }
 
     @GetMapping("/{user_id}")
-    public ResponseEntity<UserFuncionario> buscarFuncionarioPorUserId(@PathVariable Long user_id) {
+    public ResponseEntity<FuncionarioDTO> buscarFuncionarioPorUserId(@PathVariable Long user_id) {
         try {
-            UserFuncionario funcionario = funcionarioService.buscarFuncionarioPorUserId(user_id);
+            FuncionarioDTO funcionario = funcionarioService.buscarFuncionarioPorUserId(user_id);
             return ResponseEntity.ok(funcionario);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -63,19 +63,19 @@ public class UserFuncionarioController {
     }
 
     @GetMapping("/nome/{nome}")
-    public ResponseEntity<UserFuncionario> buscarFuncionarioPorNome(@PathVariable String nome) {
+    public ResponseEntity<FuncionarioDTO> buscarFuncionarioPorNome(@PathVariable String nome) {
         try {
-            UserFuncionario funcionario = funcionarioService.buscarFuncionarioPorNome(nome);
+            FuncionarioDTO funcionario = funcionarioService.buscarFuncionarioPorNome(nome);
             return ResponseEntity.ok(funcionario);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-
+    
     @GetMapping("/email/{email}")
-    public ResponseEntity<UserFuncionario> buscarFuncionarioPorEmail(@PathVariable String email) {
+    public ResponseEntity<FuncionarioDTO> buscarFuncionarioPorEmail(@PathVariable String email) {
         try {
-            UserFuncionario funcionario = funcionarioService.buscarFuncionarioPorEmail(email);
+            FuncionarioDTO funcionario = funcionarioService.buscarFuncionarioPorEmail(email);
             return ResponseEntity.ok(funcionario);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -103,6 +103,16 @@ public class UserFuncionarioController {
             return ResponseEntity.ok(funcionarioAutenticado);
         } catch (ErroAutenticacao e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+    
+    @GetMapping
+    public ResponseEntity<List<FuncionarioDTO>> buscarTodosFuncionarios() {
+        try {
+            List<FuncionarioDTO> funcionarios = funcionarioService.buscarTodosFuncionarios();
+            return ResponseEntity.ok(funcionarios);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
     
