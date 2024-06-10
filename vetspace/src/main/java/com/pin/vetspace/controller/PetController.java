@@ -3,12 +3,14 @@ package com.pin.vetspace.controller;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.pin.vetspace.model.Usuario;
+import com.pin.vetspace.dto.PetDTO;
 import com.pin.vetspace.model.Pet;
 import com.pin.vetspace.service.PetService;
 import com.pin.vetspace.service.UsuarioService;
@@ -64,5 +66,13 @@ public class PetController {
         Usuario usuario = usuarioService.buscarUsuarioPorNome(nome);
         List<Pet> pets = petService.buscarPetPorUsuario(usuario);
         return ResponseEntity.ok(pets);
+    }
+    
+    @GetMapping("/usuario/{usuarioId}/pets")
+    public ResponseEntity<List<PetDTO>> buscarPetsPorUsuarioId(@PathVariable Long usuarioId) {
+        Usuario usuario = usuarioService.buscarUsuarioPorId(usuarioId);
+        List<Pet> pets = petService.buscarPetPorUsuario(usuario);
+        List<PetDTO> petDTOs = pets.stream().map(PetDTO::new).collect(Collectors.toList());
+        return ResponseEntity.ok(petDTOs);
     }
 }
