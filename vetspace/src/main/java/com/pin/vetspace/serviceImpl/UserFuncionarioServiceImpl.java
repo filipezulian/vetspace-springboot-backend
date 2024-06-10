@@ -2,11 +2,13 @@ package com.pin.vetspace.serviceImpl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.pin.vetspace.dto.FuncionarioDTO;
 import com.pin.vetspace.exception.ErroAutenticacao;
 import com.pin.vetspace.model.Credencial;
 import com.pin.vetspace.model.UserFuncionario;
@@ -131,13 +133,25 @@ public class UserFuncionarioServiceImpl implements UserFuncionarioService {
         return u;
     }
 
+    
     @Override
-    public List<UserFuncionario> buscarFuncionariosPorPlantao(Integer plantao) {
+    public List<FuncionarioDTO> buscarFuncionariosPorPlantao(Integer plantao) {
         List<UserFuncionario> funcionarios = funcionarioRepository.findByPlantao(plantao);
         if (funcionarios.isEmpty()) {
             throw new RuntimeException("Não há funcionários atribuídos ao plantão " + plantao);
         }
-        return funcionarios;
+
+        return funcionarios.stream()
+                .map(func -> {
+                    FuncionarioDTO dto = new FuncionarioDTO();
+                    dto.setNome(func.getUsuario().getNome());
+                    dto.setPlantao(func.getPlantao());
+                    dto.setEspecializacao(func.getEspecializao());
+                    dto.setTelefone(func.getUsuario().getTelefone());
+                    dto.setEmail(func.getUsuario().getEmail());
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
 }

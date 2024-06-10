@@ -2,6 +2,7 @@ package com.pin.vetspace.service;
 
 import java.util.List;
 
+import com.pin.vetspace.dto.FuncionarioDTO;
 import com.pin.vetspace.model.Credencial;
 import com.pin.vetspace.model.UserFuncionario;
 
@@ -21,7 +22,9 @@ public interface UserFuncionarioService {
     
     UserFuncionario autenticar(Credencial credencial);
     
-    List<UserFuncionario> buscarFuncionariosPorPlantao(Integer plantao);
+    //List<UserFuncionario> buscarFuncionariosPorPlantao(Integer plantao);
     
     UserFuncionario buscarFuncionarioPorUserId(Long userId);
+    
+    List<FuncionarioDTO> buscarFuncionariosPorPlantao(Integer plantao);
 }

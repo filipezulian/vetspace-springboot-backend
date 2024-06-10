@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
+import com.pin.vetspace.dto.FuncionarioDTO;
 import com.pin.vetspace.exception.ErroAutenticacao;
 import com.pin.vetspace.model.Credencial;
 import com.pin.vetspace.model.UserFuncionario;
@@ -80,10 +82,11 @@ public class UserFuncionarioController {
         }
     }
 
+    
     @GetMapping("/plantao/{plantao}")
-    public ResponseEntity<List<UserFuncionario>> buscarFuncionariosPorPlantao(@PathVariable Integer plantao) {
+    public ResponseEntity<List<FuncionarioDTO>> buscarFuncionariosPorPlantao(@PathVariable Integer plantao) {
         try {
-            List<UserFuncionario> funcionarios = funcionarioService.buscarFuncionariosPorPlantao(plantao);
+            List<FuncionarioDTO> funcionarios = funcionarioService.buscarFuncionariosPorPlantao(plantao);
             if (funcionarios.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(funcionarios);
             }
