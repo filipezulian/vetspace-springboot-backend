@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.pin.vetspace.exception.ErroAutenticacao;
-import com.pin.vetspace.model.Blog;
 import com.pin.vetspace.model.Credencial;
 import com.pin.vetspace.model.Pet;
 import com.pin.vetspace.model.UserFuncionario;
