@@ -2,6 +2,8 @@ package com.pin.vetspace.controller;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -70,5 +72,10 @@ public class UsuarioController {
         } catch (ErroAutenticacao e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+    }
+    
+    @GetMapping()
+    public ResponseEntity<List<Usuario>> getUsuarios(){
+        return ResponseEntity.ok().body(usuarioService.buscarTodos());
     }
 }

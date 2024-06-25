@@ -150,4 +150,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 		return u;
 	}
+	
+	@Override
+    public List<Usuario> buscarTodos() {
+        return usuarioRepository.findAll();
+    }
 }

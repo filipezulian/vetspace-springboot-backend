@@ -15,7 +15,7 @@ public class VetspaceApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
 						.allowedMethods("*")
-						.allowedOrigins("http://190.168.0.109:3000");
+						.allowedOrigins("http://localhost:3000/", "http://192.168.0.111:3000");
 			}
 		};
 	}
