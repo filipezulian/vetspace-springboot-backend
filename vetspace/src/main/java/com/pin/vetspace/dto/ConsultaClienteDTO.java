@@ -1,6 +1,7 @@
 package com.pin.vetspace.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import com.pin.vetspace.model.Pet;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,10 +11,10 @@ import lombok.NoArgsConstructor;
 public class ConsultaClienteDTO {
 
     private Pet pet;
-    private LocalDate data;
+    private LocalDateTime  data;
     private String obs;
 
-    public ConsultaClienteDTO(Pet pet, LocalDate data, String obs) {
+    public ConsultaClienteDTO(Pet pet, LocalDateTime  data, String obs) {
         this.pet = pet;
         this.data = data;
         this.obs = obs;

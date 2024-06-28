@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pin.vetspace.dto.ConsultaClienteDTO;
 import com.pin.vetspace.dto.ConsultaDTO;
+import com.pin.vetspace.dto.ConsultaFuncionarioDTO;
 import com.pin.vetspace.model.Consulta;
 
 
@@ -24,5 +25,9 @@ public interface ConsultaService {
     List<ConsultaDTO> buscarConsultasConfirmadas();
 
     List<ConsultaDTO> buscarConsultasNaoConfirmadas();
+    
+    Consulta salvarConsultaFuncionario(ConsultaFuncionarioDTO consultaFuncionarioDTO);
+    
+    ConsultaDTO aprovarConsulta(Long consultaId);
 
 }

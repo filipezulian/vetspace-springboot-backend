@@ -1,6 +1,6 @@
 package com.pin.vetspace.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,7 +36,7 @@ public class Consulta {
     @JoinColumn(name = "pet_id", referencedColumnName = "pet_id")
     private Pet pet;
     
-    private LocalDate data;
+    private LocalDateTime  data;
     
     private String obs;
     
