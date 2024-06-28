@@ -12,4 +12,5 @@ public interface BlogService {
 	
 	void excluirBlog(Long id) throws Exception;
 	
+	Blog editarBlog(Long id, String descricao, String titulo)throws Exception;
 }

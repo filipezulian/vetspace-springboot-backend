@@ -40,5 +40,18 @@ public class BlogServiceImpl implements BlogService{
 			throw new Exception("Blog não encontrado do ID: " + id);
 		}
 	}
+
+	@Override
+    public Blog editarBlog(Long id, String descricao, String titulo) throws Exception {
+        Optional<Blog> optionalBlog = blogRepository.findById(id);
+        if (optionalBlog.isPresent()) {
+            Blog blog = optionalBlog.get();
+            blog.setDescricao(descricao);
+            blog.setTitulo(titulo);
+            return blogRepository.save(blog);
+        } else {
+            throw new Exception("Blog não encontrado do ID: " + id);
+        }
+    }
 	
 }
