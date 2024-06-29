@@ -3,12 +3,12 @@ package com.pin.vetspace.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.pin.vetspace.dto.ConsultaClienteDTO;
 import com.pin.vetspace.dto.ConsultaDTO;
 import com.pin.vetspace.dto.ConsultaFuncionarioDTO;
 import com.pin.vetspace.model.Consulta;
 import com.pin.vetspace.service.ConsultaService;
+
 
 import java.util.List;
 
@@ -50,10 +50,21 @@ public class ConsultaController {
         return ResponseEntity.ok().build();
     }
     
-    @PutMapping("/aprovar/{consultaId}")
+   /* @PutMapping("/aprovar/{consultaId}")
     public ResponseEntity<ConsultaDTO> aprovarConsulta(@PathVariable Long consultaId) {
         ConsultaDTO consultaAprovada = consultaService.aprovarConsulta(consultaId);
         return ResponseEntity.ok(consultaAprovada);
+    }*/
+    
+    @PutMapping("/aprovar/{consultaId}")
+    public ResponseEntity<ConsultaDTO> aprovarConsulta(@PathVariable Long consultaId) {
+        try {
+            ConsultaDTO consultaAprovada = consultaService.aprovarConsulta(consultaId);
+            return ResponseEntity.ok(consultaAprovada);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
+    
 
 }

@@ -28,6 +28,6 @@ public interface ConsultaService {
     
     Consulta salvarConsultaFuncionario(ConsultaFuncionarioDTO consultaFuncionarioDTO);
     
-    ConsultaDTO aprovarConsulta(Long consultaId);
+    ConsultaDTO aprovarConsulta(Long consultaId) throws Exception;
 
 }

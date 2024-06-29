@@ -1,8 +1,13 @@
 package com.pin.vetspace.serviceImpl;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +15,13 @@ import com.pin.vetspace.dto.ConsultaClienteDTO;
 import com.pin.vetspace.dto.ConsultaDTO;
 import com.pin.vetspace.dto.ConsultaFuncionarioDTO;
 import com.pin.vetspace.model.Consulta;
+import com.pin.vetspace.model.Email;
 import com.pin.vetspace.model.Pet;
+import com.pin.vetspace.model.Usuario;
 import com.pin.vetspace.repository.ConsultaRepository;
 import com.pin.vetspace.repository.PetRepository;
 import com.pin.vetspace.service.ConsultaService;
+import com.pin.vetspace.service.EmailService;
 
 @Service
 public class ConsultaServiceImpl implements ConsultaService {
@@ -23,6 +31,16 @@ public class ConsultaServiceImpl implements ConsultaService {
     
     @Autowired
     PetRepository petRepository;
+    
+    @Autowired
+    private final EmailService emailService;
+    
+    @Autowired
+    public ConsultaServiceImpl(ConsultaRepository consultaRepository, EmailService emailService, PetRepository petRepository) {
+        this.consultaRepository = consultaRepository;
+        this.emailService = emailService;
+        this.petRepository = petRepository;
+    }
 
     @Override
     public Consulta salvarConsulta(Consulta consulta) {
@@ -87,13 +105,30 @@ public class ConsultaServiceImpl implements ConsultaService {
         return consultaRepository.save(consulta);
     }
     
+    
     @Override
-    public ConsultaDTO aprovarConsulta(Long consultaId) {
+    public ConsultaDTO aprovarConsulta(Long consultaId) throws Exception {
         Consulta consulta = consultaRepository.findById(consultaId)
-                .orElseThrow(() -> new RuntimeException("Consulta não encontrada"));
+                .orElseThrow(() -> new Exception("Consulta não encontrada"));
 
         consulta.setConfirmado(true);
-        consultaRepository.save(consulta); // Atualiza o status da consulta para confirmado
+        consultaRepository.save(consulta);
+
+        // Enviar e-mail de notificação
+        Usuario usuario = consulta.getPet().getUsuario();
+        if (usuario != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' HH:mm 'horas'");
+            if (consulta.getData() instanceof LocalDateTime) {
+                String dataFormatada = consulta.getData().format(formatter);
+                String subject = "Confirmação de Consulta";
+                String body = "Sua consulta foi confirmada para o dia " + dataFormatada + ".";
+
+                Email email = new Email(usuario.getEmail(), subject, body);
+                emailService.sendEmail(email);
+            } else {
+                throw new Exception("Tipo de dado inválido para a data da consulta");
+            }
+        }
 
         return new ConsultaDTO(
                 consulta.getId(),
