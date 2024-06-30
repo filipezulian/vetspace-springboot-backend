@@ -105,7 +105,6 @@ public class ConsultaServiceImpl implements ConsultaService {
         return consultaRepository.save(consulta);
     }
     
-    
     @Override
     public ConsultaDTO aprovarConsulta(Long consultaId) throws Exception {
         Consulta consulta = consultaRepository.findById(consultaId)
@@ -117,11 +116,14 @@ public class ConsultaServiceImpl implements ConsultaService {
         // Enviar e-mail de notificação
         Usuario usuario = consulta.getPet().getUsuario();
         if (usuario != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' HH:mm 'horas'");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' HH:mm 'hrs'");
             if (consulta.getData() instanceof LocalDateTime) {
                 String dataFormatada = consulta.getData().format(formatter);
                 String subject = "Confirmação de Consulta";
-                String body = "Sua consulta foi confirmada para o dia " + dataFormatada + ".";
+                String body = String.format(
+                    "Olá %s,\n\nSua consulta foi confirmada para o dia %s.\n\nAtenciosamente,\n\nEquipe Vetspace",
+                    usuario.getNome(), dataFormatada
+                );
 
                 Email email = new Email(usuario.getEmail(), subject, body);
                 emailService.sendEmail(email);
@@ -137,4 +139,27 @@ public class ConsultaServiceImpl implements ConsultaService {
                 consulta.getObs(),
                 consulta.isConfirmado());
     }
+    
+    @Override
+    public void rejeitarConsulta(Long consultaId) throws Exception {
+        Consulta consulta = consultaRepository.findById(consultaId)
+                .orElseThrow(() -> new Exception("Consulta não encontrada"));
+
+        // Enviar e-mail de notificação
+        Usuario usuario = consulta.getPet().getUsuario();
+        if (usuario != null) {
+            String subject = "Consulta Rejeitada";
+            String body = "Olá " + usuario.getNome() + ",\n\n" +
+                          "Infelizmente, não vamos conseguir atender a sua consulta solicitada para o dia " + 
+                          consulta.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' HH:mm 'hrs'")) + ".\n" +
+                          "\nPor favor, solicite uma nova consulta para outra data.\n\n" +
+                          "Atenciosamente,\n\nEquipe Vetspace";
+
+            Email email = new Email(usuario.getEmail(), subject, body);
+            emailService.sendEmail(email);
+        }
+
+        consultaRepository.delete(consulta);
+    }
+
 }

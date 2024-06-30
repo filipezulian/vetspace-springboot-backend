@@ -29,5 +29,6 @@ public interface ConsultaService {
     Consulta salvarConsultaFuncionario(ConsultaFuncionarioDTO consultaFuncionarioDTO);
     
     ConsultaDTO aprovarConsulta(Long consultaId) throws Exception;
-
+    
+    void rejeitarConsulta(Long consultaId) throws Exception;
 }

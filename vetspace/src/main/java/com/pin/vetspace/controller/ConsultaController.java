@@ -66,5 +66,15 @@ public class ConsultaController {
         }
     }
     
+    @DeleteMapping("/rejeitar/{id}")
+    public ResponseEntity<Void> rejeitarConsulta(@PathVariable Long id) {
+        try {
+            consultaService.rejeitarConsulta(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
 
 }
