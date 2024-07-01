@@ -38,17 +38,6 @@ public class PetServiceImpl implements PetService {
 		this.petRepository = petRepository;
 	}
 
-	/*
-	 * @Override public Pet salvarPet(Pet pet) { Optional<Pet> existePet
-	 * =petRepository.findById(pet.getId());
-	 * 
-	 * if (existePet.isPresent()) { throw new Error("Pet já existe"); }
-	 * 
-	 * Pet petNovo = petRepository.save(pet);
-	 * 
-	 * return petNovo; }
-	 */
-
 	@Override
 	public Pet salvarPetParaUsuario(Pet pet, Long userId) {
 		Optional<Usuario> usuarioOptional = usuarioRepository.findById(userId);
@@ -83,14 +72,6 @@ public class PetServiceImpl implements PetService {
 			return petRepository.save(petExistente);
 		}
 	}
-
-	/*
-	 * @Override public void excluirPet(Long id) { Pet petExistente =
-	 * buscarPetPorId(id);
-	 * 
-	 * if (petExistente != null) { petRepository.delete(petExistente); } else {
-	 * throw new RuntimeException("Pet não encontrado"); } }
-	 */
 
 	@Override
     @Transactional

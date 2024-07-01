@@ -60,12 +60,6 @@ public class ConsultaServiceImpl implements ConsultaService {
     }
 
 
-    /*@Override
-    public Consulta buscarConsultaPorId(Long id) {
-        return consultaRepository.findById(id).orElseThrow(() -> new RuntimeException("Consulta não encontrada"));
-    }*/
-
-
     @Override
     public List<ConsultaDTO> buscarConsultasConfirmadas() {
         List<Consulta> consultas = consultaRepository.findByConfirmadoTrue();
@@ -169,19 +163,6 @@ public class ConsultaServiceImpl implements ConsultaService {
         return consultaRepository.findById(id).orElse(null);
     }
 
-    /*@Override
-    @Transactional
-    public void excluirConsulta(Long id) throws Exception {
-        Consulta consulta = consultaRepository.findById(id)
-                .orElseThrow(() -> new Exception("Consulta não encontrada"));
-
-        // Excluir o relatório associado à consulta
-        List<RelatorioConsulta> relatorios = relatorioConsultaRepository.findByConsulta(consulta);
-        relatorioConsultaRepository.deleteAll(relatorios);
-
-        // Excluir a consulta
-        consultaRepository.delete(consulta);
-    }*/
     
     @Transactional
     public void excluirConsulta(Long consultaId) throws Exception {

@@ -93,45 +93,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 			return usuarioRepository.save(usuarioExistente);
 		}
 	}
-
-	/*
-	 * @Override
-	 * 
-	 * @Transactional public void excluirUsuario(Long id) { Optional<Usuario>
-	 * optionalUsuario = usuarioRepository.findById(id); if
-	 * (optionalUsuario.isPresent()) { Usuario usuario = optionalUsuario.get();
-	 * UserFuncionario userFuncionario =
-	 * userFuncionarioRepository.findByUsuario(usuario); if (userFuncionario !=
-	 * null) { throw new Error("Não foi possível deletar esse usuário"); }
-	 * usuarioRepository.delete(usuario); } else { throw new
-	 * EntityNotFoundException("Usuário não encontrado com o ID: " + id); } }
-	 */
-
-//	@Override
-//	@Transactional
-//	public void excluirUsuario(Long id) {
-//		Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
-//		optionalUsuario.ifPresent(usuario -> {
-//			// Verifica se o usuário está associado a UserFuncionario
-//			UserFuncionario userFuncionario = userFuncionarioRepository.findByUsuario(usuario);
-//			if (userFuncionario != null) {
-//				throw new RuntimeException(
-//						"Não é possível excluir esse usuário porque está associado a uma função de funcionário.");
-//			}
-//
-//			// Exclui os pets associados ao usuário
-//			List<Pet> pets = petRepository.findByUsuario(usuario);
-//			petRepository.deleteAll(pets);
-//
-//			// Exclui o usuário
-//			usuarioRepository.delete(usuario);
-//		});
-//
-//		// Se optionalUsuario estiver vazio, lançamos uma exceção
-//		if (!optionalUsuario.isPresent()) {
-//			throw new EntityNotFoundException("Usuário não encontrado com o ID: " + id);
-//		}
-//	}
 	
 	@Override
     @Transactional

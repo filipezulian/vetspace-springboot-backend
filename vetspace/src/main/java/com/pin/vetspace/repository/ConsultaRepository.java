@@ -22,9 +22,6 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Long>{
 
 	List<Consulta> findByPet(Pet petExistente);
 	
-	//@Query("delete from relatorio_consulta using consulta where consulta = :consultaId")
-	//void deleteRelatorioByConsultaId(@Param("consultaId") Long consultaId);
-	
 	@Modifying
 	@Query("DELETE FROM RelatorioConsulta r WHERE r.consulta.id = :consultaId")
 	void deleteRelatorioByConsultaId(@Param("consultaId") Long consultaId);
