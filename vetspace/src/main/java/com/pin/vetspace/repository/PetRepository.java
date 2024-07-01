@@ -13,7 +13,7 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
 
 	Optional<Pet> findById(long id);
 	
-	Optional<Pet> findByNome(String nome);
+	List<Pet> findByNome(String nome);
 	
 	List<Pet> findAll();
 	

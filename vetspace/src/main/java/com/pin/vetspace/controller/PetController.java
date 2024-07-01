@@ -56,9 +56,9 @@ public class PetController {
     }
 
     @GetMapping("/nomePet/{nome}")
-    public ResponseEntity<Pet> buscarPetPorNome(@PathVariable String nome) {
-        Pet pet = petService.buscarPetPorNome(nome);
-        return ResponseEntity.ok(pet);
+    public ResponseEntity<List<Pet>> buscarPetsPorNome(@PathVariable String nome) {
+        List<Pet> pets = petService.buscarPetPorNome(nome);
+        return ResponseEntity.ok(pets);
     }
 
     @GetMapping("/usuario/{nome}")
@@ -75,4 +75,5 @@ public class PetController {
         List<PetDTO> petDTOs = pets.stream().map(PetDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok(petDTOs);
     }
+    
 }

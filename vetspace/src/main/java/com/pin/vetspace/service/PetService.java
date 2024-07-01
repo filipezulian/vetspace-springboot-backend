@@ -16,7 +16,7 @@ public interface PetService {
 
     void excluirPet(Long id);
 
-    Pet buscarPetPorNome(String nome);
+    List<Pet> buscarPetPorNome(String nome);
 
     List<Pet> buscarPetPorUsuario(Usuario usuario);
     

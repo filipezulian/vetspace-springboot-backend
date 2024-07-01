@@ -31,4 +31,6 @@ public interface ConsultaService {
     ConsultaDTO aprovarConsulta(Long consultaId) throws Exception;
     
     void rejeitarConsulta(Long consultaId) throws Exception;
+    
+    Consulta buscarConsultaPorId(Long id);
 }

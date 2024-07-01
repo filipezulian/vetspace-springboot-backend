@@ -1,16 +1,11 @@
 package com.pin.vetspace.serviceImpl;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.pin.vetspace.dto.ConsultaClienteDTO;
 import com.pin.vetspace.dto.ConsultaDTO;
 import com.pin.vetspace.dto.ConsultaFuncionarioDTO;
@@ -160,6 +155,11 @@ public class ConsultaServiceImpl implements ConsultaService {
         }
 
         consultaRepository.delete(consulta);
+    }
+    
+    @Override
+    public Consulta buscarConsultaPorId(Long id) {
+        return consultaRepository.findById(id).orElse(null);
     }
 
 }

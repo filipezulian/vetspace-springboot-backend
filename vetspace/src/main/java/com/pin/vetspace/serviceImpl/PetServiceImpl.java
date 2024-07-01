@@ -86,9 +86,8 @@ public class PetServiceImpl implements PetService {
 		}
 	}
 
-	@Override
-	public Pet buscarPetPorNome(String nome) {
-		return petRepository.findByNome(nome).orElseThrow(() -> new RuntimeException("Pet não encontrado"));
+	public List<Pet> buscarPetPorNome(String nome) {
+	    return petRepository.findByNome(nome);
 	}
 	
     @Override

@@ -11,12 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PetDTO {
 
+	private Long id;
     private TipoPet tipo;
     private boolean sexo;
     private String nome;
     private LocalDate nascimento;
 
-    public PetDTO( TipoPet tipo, boolean sexo, String nome, LocalDate nascimento) {
+    public PetDTO( Long id,TipoPet tipo, boolean sexo, String nome, LocalDate nascimento) {
+    	this.id = id;
         this.tipo = tipo;
         this.sexo = sexo;
         this.nome = nome;
@@ -24,6 +26,7 @@ public class PetDTO {
     }
 
     public PetDTO(Pet pet) {
+    	this.id = pet.getId();
         this.tipo = pet.getTipo();
         this.sexo = pet.isSexo();
         this.nome = pet.getNome();
