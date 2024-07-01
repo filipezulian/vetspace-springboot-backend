@@ -12,11 +12,15 @@ import com.pin.vetspace.dto.ConsultaFuncionarioDTO;
 import com.pin.vetspace.model.Consulta;
 import com.pin.vetspace.model.Email;
 import com.pin.vetspace.model.Pet;
+import com.pin.vetspace.model.RelatorioConsulta;
 import com.pin.vetspace.model.Usuario;
 import com.pin.vetspace.repository.ConsultaRepository;
 import com.pin.vetspace.repository.PetRepository;
+import com.pin.vetspace.repository.RelatorioConsultaRepository;
 import com.pin.vetspace.service.ConsultaService;
 import com.pin.vetspace.service.EmailService;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class ConsultaServiceImpl implements ConsultaService {
@@ -26,6 +30,9 @@ public class ConsultaServiceImpl implements ConsultaService {
     
     @Autowired
     PetRepository petRepository;
+    
+    @Autowired
+    RelatorioConsultaRepository relatorioConsultaRepository;
     
     @Autowired
     private final EmailService emailService;
@@ -162,4 +169,32 @@ public class ConsultaServiceImpl implements ConsultaService {
         return consultaRepository.findById(id).orElse(null);
     }
 
+    /*@Override
+    @Transactional
+    public void excluirConsulta(Long id) throws Exception {
+        Consulta consulta = consultaRepository.findById(id)
+                .orElseThrow(() -> new Exception("Consulta não encontrada"));
+
+        // Excluir o relatório associado à consulta
+        List<RelatorioConsulta> relatorios = relatorioConsultaRepository.findByConsulta(consulta);
+        relatorioConsultaRepository.deleteAll(relatorios);
+
+        // Excluir a consulta
+        consultaRepository.delete(consulta);
+    }*/
+    
+    @Transactional
+    public void excluirConsulta(Long consultaId) throws Exception {
+        Consulta consulta = consultaRepository.findById(consultaId)
+                .orElseThrow(() -> new Exception("Consulta não encontrada"));
+
+        // Verifica se há um relatório associado à consulta
+        if (consulta.isRelatorio()) {
+            RelatorioConsulta relatorio = relatorioConsultaRepository.findByConsulta(consulta);
+            relatorioConsultaRepository.delete(relatorio);
+        }
+
+        // Deleta a consulta
+        consultaRepository.delete(consulta);
+    }
 }

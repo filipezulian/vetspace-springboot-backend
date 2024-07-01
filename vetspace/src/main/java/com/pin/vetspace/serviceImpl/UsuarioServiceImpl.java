@@ -6,12 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.pin.vetspace.exception.ErroAutenticacao;
+import com.pin.vetspace.model.Consulta;
 import com.pin.vetspace.model.Credencial;
 import com.pin.vetspace.model.Pet;
+import com.pin.vetspace.model.RelatorioConsulta;
 import com.pin.vetspace.model.UserFuncionario;
 import com.pin.vetspace.model.Usuario;
 import com.pin.vetspace.repository.BlogRepository;
+import com.pin.vetspace.repository.ConsultaRepository;
 import com.pin.vetspace.repository.PetRepository;
+import com.pin.vetspace.repository.RelatorioConsultaRepository;
 import com.pin.vetspace.repository.UserFuncionarioRepository;
 import com.pin.vetspace.repository.UsuarioRepository;
 import com.pin.vetspace.service.UsuarioService;
@@ -33,6 +37,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Autowired
 	PetRepository petRepository;
+	
+	@Autowired
+	ConsultaRepository consultaRepository;
+	
+    @Autowired
+    RelatorioConsultaRepository relatorioConsultaRepository;
 
 	@Override
 	public Long salvarUsuario(Usuario usuario) {
@@ -97,31 +107,58 @@ public class UsuarioServiceImpl implements UsuarioService {
 	 * EntityNotFoundException("Usuário não encontrado com o ID: " + id); } }
 	 */
 
+//	@Override
+//	@Transactional
+//	public void excluirUsuario(Long id) {
+//		Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
+//		optionalUsuario.ifPresent(usuario -> {
+//			// Verifica se o usuário está associado a UserFuncionario
+//			UserFuncionario userFuncionario = userFuncionarioRepository.findByUsuario(usuario);
+//			if (userFuncionario != null) {
+//				throw new RuntimeException(
+//						"Não é possível excluir esse usuário porque está associado a uma função de funcionário.");
+//			}
+//
+//			// Exclui os pets associados ao usuário
+//			List<Pet> pets = petRepository.findByUsuario(usuario);
+//			petRepository.deleteAll(pets);
+//
+//			// Exclui o usuário
+//			usuarioRepository.delete(usuario);
+//		});
+//
+//		// Se optionalUsuario estiver vazio, lançamos uma exceção
+//		if (!optionalUsuario.isPresent()) {
+//			throw new EntityNotFoundException("Usuário não encontrado com o ID: " + id);
+//		}
+//	}
+	
 	@Override
-	@Transactional
-	public void excluirUsuario(Long id) {
-		Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
-		optionalUsuario.ifPresent(usuario -> {
-			// Verifica se o usuário está associado a UserFuncionario
-			UserFuncionario userFuncionario = userFuncionarioRepository.findByUsuario(usuario);
-			if (userFuncionario != null) {
-				throw new RuntimeException(
-						"Não é possível excluir esse usuário porque está associado a uma função de funcionário.");
-			}
+    @Transactional
+    public void excluirUsuario(Long id) {
+        Usuario usuarioExistente = usuarioRepository.findById(id).orElse(null);
 
-			// Exclui os pets associados ao usuário
-			List<Pet> pets = petRepository.findByUsuario(usuario);
-			petRepository.deleteAll(pets);
+        if (usuarioExistente != null) {
+            // Excluir todos os pets associados ao usuário
+            List<Pet> pets = petRepository.findByUsuario(usuarioExistente);
+            for (Pet pet : pets) {
+                List<Consulta> consultas = consultaRepository.findByPet(pet);
+                for (Consulta consulta : consultas) {
+                    if (consulta.isRelatorio()) {
+                        RelatorioConsulta relatorio = relatorioConsultaRepository.findByConsulta(consulta);
+                        relatorioConsultaRepository.delete(relatorio);
+                    }
+                    consultaRepository.delete(consulta);
+                }
+                petRepository.delete(pet);
+            }
 
-			// Exclui o usuário
-			usuarioRepository.delete(usuario);
-		});
-
-		// Se optionalUsuario estiver vazio, lançamos uma exceção
-		if (!optionalUsuario.isPresent()) {
-			throw new EntityNotFoundException("Usuário não encontrado com o ID: " + id);
-		}
-	}
+            // Excluir o usuário
+            usuarioRepository.delete(usuarioExistente);
+        } else {
+            throw new RuntimeException("Usuário não encontrado");
+        }
+    }
 
 	@Override
 	public Usuario buscarUsuarioPorNome(String nome) {

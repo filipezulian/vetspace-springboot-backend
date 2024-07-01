@@ -2,12 +2,14 @@ package com.pin.vetspace.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.pin.vetspace.dto.ConsultaClienteDTO;
 import com.pin.vetspace.dto.ConsultaDTO;
 import com.pin.vetspace.dto.ConsultaFuncionarioDTO;
 import com.pin.vetspace.model.Consulta;
 
-
+@Service
 public interface ConsultaService {
 	
     Consulta salvarConsulta(Consulta consulta);
@@ -33,4 +35,6 @@ public interface ConsultaService {
     void rejeitarConsulta(Long consultaId) throws Exception;
     
     Consulta buscarConsultaPorId(Long id);
+
+	void excluirConsulta(Long consultaId) throws Exception;
 }

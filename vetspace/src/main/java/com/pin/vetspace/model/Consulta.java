@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -32,7 +33,7 @@ public class Consulta {
     @Column(name = "servicos", columnDefinition = "integer[]")
     private int[] servicos;
     
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "pet_id", referencedColumnName = "pet_id")
     private Pet pet;
     
