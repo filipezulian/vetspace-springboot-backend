@@ -34,4 +34,11 @@ public class RelatorioConsultaServiceImpl implements RelatorioConsultaService {
 
         return relatorioConsultaRepository.save(relatorioConsulta);
     }
+    
+    @Override
+    public RelatorioConsulta buscarRelatorioPorId(Long relatorioId) {
+        return relatorioConsultaRepository.findById(relatorioId)
+                .orElseThrow(() -> new RuntimeException("Relatório de consulta não encontrado com o ID: " + relatorioId));
+    }
+       
 }
