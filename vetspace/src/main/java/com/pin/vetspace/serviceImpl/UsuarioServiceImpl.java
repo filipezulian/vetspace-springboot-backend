@@ -83,16 +83,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 			if (usuario.getNome() != null) {
 				usuarioExistente.setNome(usuario.getNome());
 			}
-			if (usuario.getEmail() != null) {
-				usuarioExistente.setEmail(usuario.getEmail());
-			}
 			if (usuario.getTelefone() != null) {
 				usuarioExistente.setTelefone(usuario.getTelefone());
-			}
-			if (usuario.getSenha() != null) {
-				BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-				String senhaHash = bcrypt.encode(usuario.getSenha());
-				usuarioExistente.setSenha(senhaHash);
 			}
 
 			return usuarioRepository.save(usuarioExistente);
