@@ -13,5 +13,8 @@ public interface MaterialRepository extends JpaRepository<Material, Long> {
     
     @Query("SELECT m.valor FROM Material m WHERE m.id IN :ids")
     List<Double> findValoresByIds(@Param("ids") List<Long> ids);
+    
+    @Query("SELECT m.nome FROM Material m WHERE m.id IN :ids")
+    List<String> findNomesByIds(@Param("ids") List<Long> ids);
 }
 

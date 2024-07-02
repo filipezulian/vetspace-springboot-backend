@@ -19,4 +19,7 @@ public interface ServicoRepository extends JpaRepository<Servico, Long>{
 	@Query("SELECT s.valor FROM Servico s WHERE s.id IN :ids")
     List<Double> findValoresByIds(@Param("ids") List<Long> ids);
 	
+    @Query("SELECT s.nome FROM Servico s WHERE s.id IN :ids")
+    List<String> findNomesByIds(@Param("ids") List<Long> ids);
+	
 }

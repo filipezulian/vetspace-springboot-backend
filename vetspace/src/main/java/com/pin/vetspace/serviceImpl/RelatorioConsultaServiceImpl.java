@@ -75,5 +75,13 @@ public class RelatorioConsultaServiceImpl implements RelatorioConsultaService {
 
         return total;
     }
+    
+    public List<String> buscarNomesMateriaisPorIds(List<Long> ids) {
+        return materialRepository.findNomesByIds(ids);
+    }
+
+    public List<String> buscarNomesServicosPorIds(List<Long> ids) {
+        return servicoRepository.findNomesByIds(ids);
+    }
        
 }
