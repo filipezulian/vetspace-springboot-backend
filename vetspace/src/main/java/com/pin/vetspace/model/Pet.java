@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import com.pin.vetspace.enums.TipoPet;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,6 +33,7 @@ public class Pet {
     @Column(name = "pet_id")
     private Long id;
     
+    @Column(name = "tipo")
     private TipoPet tipo;
     
     private boolean sexo;

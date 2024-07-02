@@ -1,10 +1,10 @@
 package com.pin.vetspace.enums;
 
 public enum TipoPet {
-    GATO(1),
-    CACHORRO(2),
-    PASSARO(3),
-    REPTIL(4);
+    GATO(0),
+    CACHORRO(1),
+    PASSARO(2),
+    REPTIL(3);
     
     private final int value;
     

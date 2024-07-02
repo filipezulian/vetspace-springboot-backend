@@ -60,23 +60,44 @@ public class PetServiceImpl implements PetService {
 		return petRepository.findById(id).orElseThrow(() -> new RuntimeException("Pet não encontrado"));
 	}
 
+//	@Override
+//	public Pet editarPet(Pet pet) {
+//		Pet petExistente = buscarPetPorId(pet.getId());
+//
+//		if (petExistente == null) {
+//			throw new RuntimeException("Pet não encontrado com o ID fornecido: " + pet.getId());
+//		} else {
+//			if (pet.getNome() != null) {
+//				petExistente.setNome(pet.getNome());
+//			}
+//			if (pet.getNascimento() != null) {
+//				petExistente.setNascimento(pet.getNascimento());
+//			}
+//			petExistente.setSexo(pet.isSexo());
+//
+//			return petRepository.save(petExistente);
+//		}
+//	}
+	
 	@Override
 	public Pet editarPet(Pet pet) {
-		Pet petExistente = buscarPetPorId(pet.getId());
+	    Pet petExistente = buscarPetPorId(pet.getId());
 
-		if (petExistente == null) {
-			throw new RuntimeException("Pet não encontrado com o ID fornecido: " + pet.getId());
-		} else {
-			if (pet.getNome() != null) {
-				petExistente.setNome(pet.getNome());
-			}
-			if (pet.getNascimento() != null) {
-				petExistente.setNascimento(pet.getNascimento());
-			}
-			petExistente.setSexo(pet.isSexo());
+	    if (petExistente == null) {
+	        throw new RuntimeException("Pet não encontrado com o ID fornecido: " + pet.getId());
+	    } else {
+	        if (pet.getNome() != null) {
+	            petExistente.setNome(pet.getNome());
+	        }
+	        if (pet.getNascimento() != null) {
+	            petExistente.setNascimento(pet.getNascimento());
+	        }
+	        petExistente.setSexo(pet.isSexo());
+	        
+	        petExistente.setTipo(pet.getTipo());
 
-			return petRepository.save(petExistente);
-		}
+	        return petRepository.save(petExistente);
+	    }
 	}
 
 	@Override
