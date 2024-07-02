@@ -17,8 +17,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	
 	List<Usuario> findAll();
 	
-	@Query("SELECT u FROM Usuario u WHERE u.permissao = 3") 
-    List<Usuario> findByPermissaoTres();
+    @Query("SELECT u FROM Usuario u WHERE u.permissao = :permissao")
+    List<Usuario> findByPermissao(@Param("permissao") int permissao);
 	
 	Optional<Usuario> findByEmail(String email);
 }
