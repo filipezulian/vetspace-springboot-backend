@@ -20,7 +20,7 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Long>{
 
     List<Consulta> findByConfirmadoFalse();
 
-	List<Consulta> findByPet(Pet petExistente);
+	List<Consulta> findByPet(Pet pet);
 	
 	@Modifying
 	@Query("DELETE FROM RelatorioConsulta r WHERE r.consulta.id = :consultaId")

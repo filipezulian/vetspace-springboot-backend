@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.pin.vetspace.model.Usuario;
 import com.pin.vetspace.model.Consulta;
+import com.pin.vetspace.model.HistoricoMedico;
 import com.pin.vetspace.model.Pet;
 import com.pin.vetspace.model.RelatorioConsulta;
 import com.pin.vetspace.repository.ConsultaRepository;
+import com.pin.vetspace.repository.HistoricoMedicoRepository;
 import com.pin.vetspace.repository.PetRepository;
 import com.pin.vetspace.repository.RelatorioConsultaRepository;
 import com.pin.vetspace.repository.UsuarioRepository;
@@ -32,6 +34,10 @@ public class PetServiceImpl implements PetService {
 
 	@Autowired
 	RelatorioConsultaRepository relatorioConsultaRepository;
+	
+    @Autowired
+    HistoricoMedicoRepository historicoMedicoRepository;
+
 
 	@Autowired
 	public PetServiceImpl(PetRepository petRepository) {
@@ -74,27 +80,33 @@ public class PetServiceImpl implements PetService {
 	}
 
 	@Override
-    @Transactional
-    public void excluirPet(Long id) {
-        Pet petExistente = petRepository.findById(id).orElse(null);
+	@Transactional
+	public void excluirPet(Long id) {
+	    Pet petExistente = petRepository.findById(id).orElse(null);
 
-        if (petExistente != null) {
-            // Excluir todas as consultas associadas ao pet
-            List<Consulta> consultas = consultaRepository.findByPet(petExistente);
-            for (Consulta consulta : consultas) {
-                if (consulta.isRelatorio()) {
-                    RelatorioConsulta relatorio = relatorioConsultaRepository.findByConsulta(consulta);
-                    relatorioConsultaRepository.delete(relatorio);
-                }
-                consultaRepository.delete(consulta);
-            }
+	    if (petExistente != null) {
+	        // Excluir todos os históricos médicos associados ao pet
+	        List<HistoricoMedico> historicosMedicos = historicoMedicoRepository.findByPet(petExistente);
+	        for (HistoricoMedico historico : historicosMedicos) {
+	            historicoMedicoRepository.delete(historico);
+	        }
 
-            // Excluir o pet
-            petRepository.delete(petExistente);
-        } else {
-            throw new RuntimeException("Pet não encontrado");
-    }
-}
+	        // Excluir todas as consultas associadas ao pet
+	        List<Consulta> consultas = consultaRepository.findByPet(petExistente);
+	        for (Consulta consulta : consultas) {
+	            // Excluir todos os relatórios associados à consulta
+	            consultaRepository.deleteRelatorioByConsultaId(consulta.getId());
+	            consultaRepository.delete(consulta);
+	        }
+	        
+	        // Excluir o pet
+	        petRepository.delete(petExistente);
+	    } else {
+	        throw new RuntimeException("Pet não encontrado");
+	    }
+	}
+
+
 
 	public List<Pet> buscarPetPorNome(String nome) {
 		return petRepository.findByNome(nome);

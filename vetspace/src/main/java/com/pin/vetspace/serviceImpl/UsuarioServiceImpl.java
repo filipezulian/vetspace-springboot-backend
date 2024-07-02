@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 import com.pin.vetspace.exception.ErroAutenticacao;
 import com.pin.vetspace.model.Consulta;
 import com.pin.vetspace.model.Credencial;
+import com.pin.vetspace.model.HistoricoMedico;
 import com.pin.vetspace.model.Pet;
 import com.pin.vetspace.model.RelatorioConsulta;
 import com.pin.vetspace.model.UserFuncionario;
 import com.pin.vetspace.model.Usuario;
 import com.pin.vetspace.repository.BlogRepository;
 import com.pin.vetspace.repository.ConsultaRepository;
+import com.pin.vetspace.repository.HistoricoMedicoRepository;
 import com.pin.vetspace.repository.PetRepository;
 import com.pin.vetspace.repository.RelatorioConsultaRepository;
 import com.pin.vetspace.repository.UserFuncionarioRepository;
@@ -43,6 +45,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
     @Autowired
     RelatorioConsultaRepository relatorioConsultaRepository;
+    
+    @Autowired
+    HistoricoMedicoRepository historicoMedicoRepository;
 
 	@Override
 	public Long salvarUsuario(Usuario usuario) {
@@ -95,31 +100,37 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 	
 	@Override
-    @Transactional
-    public void excluirUsuario(Long id) {
-        Usuario usuarioExistente = usuarioRepository.findById(id).orElse(null);
+	@Transactional
+	public void excluirUsuario(Long id) {
+	    Usuario usuarioExistente = usuarioRepository.findById(id).orElse(null);
 
-        if (usuarioExistente != null) {
-            // Excluir todos os pets associados ao usuário
-            List<Pet> pets = petRepository.findByUsuario(usuarioExistente);
-            for (Pet pet : pets) {
-                List<Consulta> consultas = consultaRepository.findByPet(pet);
-                for (Consulta consulta : consultas) {
-                    if (consulta.isRelatorio()) {
-                        RelatorioConsulta relatorio = relatorioConsultaRepository.findByConsulta(consulta);
-                        relatorioConsultaRepository.delete(relatorio);
-                    }
-                    consultaRepository.delete(consulta);
-                }
-                petRepository.delete(pet);
-            }
+	    if (usuarioExistente != null) {
+	        // Excluir todos os pets associados ao usuário
+	        List<Pet> pets = petRepository.findByUsuario(usuarioExistente);
+	        for (Pet pet : pets) {
+	            // Excluir todos os históricos médicos associados ao pet
+	            List<HistoricoMedico> historicosMedicos = historicoMedicoRepository.findByPet(pet);
+	            for (HistoricoMedico historico : historicosMedicos) {
+	                historicoMedicoRepository.delete(historico);
+	            }
 
-            // Excluir o usuário
-            usuarioRepository.delete(usuarioExistente);
-        } else {
-            throw new RuntimeException("Usuário não encontrado");
-        }
-    }
+	            // Excluir todas as consultas associadas ao pet
+	            List<Consulta> consultas = consultaRepository.findByPet(pet);
+	            for (Consulta consulta : consultas) {
+	                // Excluir todos os relatórios associados à consulta
+	                consultaRepository.deleteRelatorioByConsultaId(consulta.getId());
+	                consultaRepository.delete(consulta);
+	            }
+	            petRepository.delete(pet);
+	        }
+
+	        // Excluir o usuário
+	        usuarioRepository.delete(usuarioExistente);
+	    } else {
+	        throw new RuntimeException("Usuário não encontrado");
+	    }
+	}
+
 
 	@Override
 	public Usuario buscarUsuarioPorNome(String nome) {
