@@ -22,6 +22,8 @@ public interface UsuarioService {
     Usuario autenticar(Credencial credencial);
     
     List<Usuario> buscarTodos();
+    
+    List<Usuario> buscarTodosComPermissaoTres(); 
 
 }
 

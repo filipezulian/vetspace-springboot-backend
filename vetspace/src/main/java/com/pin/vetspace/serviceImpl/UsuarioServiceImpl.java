@@ -156,4 +156,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     public List<Usuario> buscarTodos() {
         return usuarioRepository.findAll();
     }
+	
+	 @Override
+	    public List<Usuario> buscarTodosComPermissaoTres() {
+	        return usuarioRepository.findByPermissaoTres();
+	    }
 }

@@ -78,4 +78,10 @@ public class UsuarioController {
     public ResponseEntity<List<Usuario>> getUsuarios(){
         return ResponseEntity.ok().body(usuarioService.buscarTodos());
     }
+    
+    @GetMapping("/clientes")
+    public ResponseEntity<List<Usuario>> buscarTodosComPermissaoTres() {
+        List<Usuario> usuarios = usuarioService.buscarTodosComPermissaoTres();
+        return ResponseEntity.ok(usuarios);
+    }
 }
